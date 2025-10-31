@@ -18,7 +18,7 @@ Code for simulating and visualizing plasmid dynamics (Fig. 1 b, c and Fig. 4)
 - two-member comunity: `niche_partition.py`
 
 ## Folder: Clonal_experiments
-Raw data (GFP/OD or selective plating) and code for processing, analyzing, and visualizing 
+Raw data (GFP/OD or selective plating) and code for processing, analyzing, and visualizing plasmid dynamics in clonal populations. (Fig. 1, 2, S1 - 3)
 
 ### Non-mobilizable plasmid dynamics
 - `GFP_Plasmid_Processing.py`: process the raw data `./Raw_data/GE_LT5_GFP_calibration.xlsx` and `./Raw_data/GE_LT5_GFP.xlsx` through calibration of GFP/OD to plasmid abundance, and transform the dataset to `./LT_Data_py/*_mean.npy` and `./LT_Data_py/*_std.npy` files.
@@ -37,7 +37,7 @@ Raw data (GFP/OD or selective plating) and code for processing, analyzing, and v
 
 ## Folder: Keio_Community
 Includes raw data from selective plating of plasmid abundance; and barcode counts from next-generation amplicon sequencing and galaxy workflow processing (`Barcode_counting.ga`)
-Includes scripts to process, analyze, and visualize the plasmid dynamics and community dynamics of synthetic *E. coli* Keio communities (Comm87 and Comm57).
+Includes scripts to process, analyze, and visualize the plasmid dynamics and community dynamics of synthetic *E. coli* Keio communities (Comm87 and Comm57). (Fig. 3, & S4 - 6)
 
 ### Comm87: 87-member community transferring plsamid R388
 - `LT11_plating_process.py` processes the selective plating results from `./raw_data/GE_LT11_Keio.xlsx`, transforming them into `./processed_data/R388_mean.npy` and `./processed_data/R388_se.npy`.
@@ -57,14 +57,14 @@ The community dynamics datasets `Comm*.npy` were copied under the `coposition_al
 - `donor_abundance_change.py` calculates the change in donor abundance between day 2 and 3.
 
 ## Folder: Sink_Community
-16S sequencing and bioinformatic analyses were performed by SeqCenter LLC. This code base provides downstream visualization and analyses based on `./raw_data/16S_composition.xlsx` and GFP/OD readout in `./raw_data/Synk_LT1.xlsx`. Note that 16S compositions are only available for experiments with sponges, while GFP/OD data are available for experiments done with and without sponges.
+16S sequencing and bioinformatic analyses were performed by SeqCenter LLC. This code base provides downstream visualization and analyses based on `./raw_data/16S_composition.xlsx` and GFP/OD readout in `./raw_data/Synk_LT1.xlsx`. Note that 16S compositions are only available for experiments with sponges, while GFP/OD data are available for experiments done with and without sponges. (Fig. 4 & S7)
 - `16S_processing.py` takes in `./raw_data/16S_composition.xlsx`, cutoff to genus-evel composition, and organize the data to `./processed_data/*.npy`.
 - `16S_composition.py` visualizes the community compositional changes.
 - `LT1_processing.py` takes in GFP/OD readouts in `./raw_data/Synk_LT1.xlsx` and transform them into organized `*_mean.npy`and `*_std.npy` files.
 - `LT1_plasmid_dynamics.py` visualizes plasmid dynamics over different conditions.
 
 ## Folder: Chemical_Treatment
-Plasmid pSC101 dynamics in cloncal E. coli MG1655 under various chemical treatments.
+Plasmid pSC101 dynamics in cloncal E. coli MG1655 under various chemical treatments. (Fig. S8)
 - `Plating_Data_Processing.py` takes in selective plating results from `./Chemical_LT14.xlsx` and transform them into organized `*_mean.npy`and `*_se.npy` files.
 - `Chemical_Curing_Plasmid_dynamics.py` visualizes plasmid dynamics and their half-lives over different conditions.
 

@@ -4,6 +4,10 @@ Author: Zhengqing Zhou, Andrea Weiss, Zhixiang Yao, Kristen Lok, Hey-in Son, and
 
 This is the github repo for reproducing analysis conducted in the paper *Dynamical memory underlies prolonged plasmid persistence after transient antibiotic treatment*
 
+To ensure compatibility with the scripts in this repository, create the Conda environment using:
+
+`conda env create -f py38_env.yml -n plasmid_ghost`
+
 Below are the contents in each folder. 
 
 ## Folder: Simulations

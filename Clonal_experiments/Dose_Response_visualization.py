@@ -76,7 +76,7 @@ def loglinear_crossing_time(
 
 host = "MG1655"
 plasmids=["pSC101","colE1","pUC"]
-Ab=["Kan","Kan","Spect"]
+Ab=["Kan","Kan","Spec"]
 time = np.arange(3,21,1)
 
 ylims = [[0, 7.5], [0, 19], [0, 19]]

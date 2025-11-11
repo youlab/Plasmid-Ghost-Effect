@@ -121,6 +121,9 @@ for i,plasmid in enumerate(plasmids):
     median = np.median(HL,axis=1)
 
     for k in range(n_ic):
+        mean_HL = np.mean(HL[k,:])
+        SD_HL = np.std(HL[k,:], ddof=1)
+        print(f"{plasmid} half-life at P0% = {inits[k]}: {mean_HL:.1f}±{SD_HL:.1f}, n = 3")
         for j in range(bio_rep):
             ax2.scatter(inits[k],HL[k,j],s=100,color=colors[k],linewidth=1,edgecolors='black',zorder=k)
 

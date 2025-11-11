@@ -6,7 +6,7 @@ colors = [cmap(i) for i in np.linspace(0, 1, 8)]
 
 host = "MG1655"
 plasmids=["pSC101","colE1","pUC"]
-Ab=["Kan","Kan","Spect"]
+Ab=["Kan","Kan","Spec"]
 time = np.arange(0,21,1)
 # ------------------------------------------------------------------
 # 1. time series ------------------------------------------

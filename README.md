@@ -8,6 +8,8 @@ To ensure compatibility with the scripts in this repository, create the Conda en
 
 `conda env create -f py38_env.yml -n plasmid_ghost`
 
+Raw 16S sequencing data are available under NCBI BioProject accession PRJNA1360409.
+
 Below are the contents in each folder. 
 
 ## Folder: Simulations

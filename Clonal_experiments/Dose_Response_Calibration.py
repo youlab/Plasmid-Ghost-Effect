@@ -31,7 +31,7 @@ gfp_df = pd.read_excel('./Raw_data/GE_LT18_GFP_calibration.xlsx',
 od_np  = od_df.to_numpy()
 gfp_np = gfp_df.to_numpy()
 
-selection = "-" # +: with selection; -: without selection
+selection = "+" # +: with selection; -: without selection
 start_col = 0 if selection =="+" else 3
 
 # Calibration curve with antibiotic treatment

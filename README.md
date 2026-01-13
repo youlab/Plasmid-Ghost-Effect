@@ -4,15 +4,24 @@ Author: Zhengqing Zhou, Andrea Weiss, Zhixiang Yao, Kristen Lok, Hey-in Son, and
 
 This is the github repo for reproducing analysis conducted in the paper *Dynamical memory underlies prolonged plasmid persistence after transient antibiotic treatment*
 
-To ensure compatibility with the scripts in this repository, create the Conda environment using:
-
-`conda env create -f environment.yml -n plasmid_ghost`
-
 Raw amplicon sequencing data for E. coli Keio communities are available on Zenodo https://zenodo.org/records/18226472.
 
 Raw 16S sequencing data are available under NCBI BioProject accession PRJNA1360409.
 
 Below are the contents in each folder. 
+
+## Requirements
+To ensure compatibility with the scripts in this repository, create the Conda environment using:
+
+`conda env create -f environment.yml -n plasmid_ghost`
+
+The scripts have been tested on:<br>
+Python: 3.14.2<br>
+numpy: 2.4.1<br>
+scipy: 1.17.0<br>
+pandas: 2.3.3<br>
+matplotlib: 3.10.8<br>
+scikit-learn: 1.8.0
 
 ## Folder: Simulations
 Code for simulating and visualizing plasmid dynamics (Fig. 1 b, c and Fig. 4)

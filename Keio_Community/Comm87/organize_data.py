@@ -17,7 +17,7 @@ def save_data(data, dict_list, sample_name, save=True):
     """
     dfs = []
     antibiotics = ["NoAb","Ab"]
-    with pd.ExcelWriter("%s.xlsx"%sample_name) as writer:
+    with pd.ExcelWriter("./processed_data/%s.xlsx"%sample_name) as writer:
         for i,column_to_sample_dicts in enumerate(dict_list):
             ab_label = antibiotics[i]
             for j, column_to_sample in enumerate(column_to_sample_dicts):
@@ -44,7 +44,7 @@ def save_data(data, dict_list, sample_name, save=True):
 
 save = True
 # Step 1: Read the CSV file
-file_path = "merged_counts.csv"  # Replace with your actual file path
+file_path = "./processed_data/merged_counts.csv"  # Replace with your actual file path
 data = pd.read_csv(file_path)
 
 # Display the first few rows to understand the format

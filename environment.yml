@@ -1,0 +1,14 @@
+name: ghost_effect
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - openpyxl
+  - scikit-learn
+  - seaborn
+prefix: /Users/johnkingzhou/miniforge3/envs/ghost_effect

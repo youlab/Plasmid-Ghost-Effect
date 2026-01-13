@@ -6,7 +6,7 @@ This is the github repo for reproducing analysis conducted in the paper *Dynamic
 
 To ensure compatibility with the scripts in this repository, create the Conda environment using:
 
-`conda env create -f py38_env.yml -n plasmid_ghost`
+`conda env create -f environment.yml -n plasmid_ghost`
 
 Raw amplicon sequencing data for E. coli Keio communities are available on Zenodo https://zenodo.org/records/18226472.
 

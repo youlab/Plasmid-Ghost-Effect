@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-plasmid = "R6K"
+plasmid = "pCU1"
 Ab = "Carb" if plasmid == "pCU1" else "Strp"
 dilution = 100
 
@@ -66,8 +66,9 @@ for i in range(len(Conditions)):
     ax.set_title(Labels[i])
 
     if i==0:
-        #ax.set_ylabel("Comm57")
         ax.set_xlabel("time (days)")
+        ax.set_ylabel(f"Comm57+{plasmid}")
+        
     fig.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
     fig.savefig(f"./figures/LT21_comm_dynamics_{plasmid}_{Conditions[i]}.png",dpi=300)
     fig.savefig(f"./figures/LT21_comm_dynamics_{plasmid}_{Conditions[i]}.svg")

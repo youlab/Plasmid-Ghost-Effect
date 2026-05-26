@@ -150,8 +150,8 @@ ax2.legend(loc='center left', bbox_to_anchor=(1, 0.5),title='host strain',
 ax2.set_xlim([40,105])
 ax2.set_xticks([50, 90, 100])
 ax2.set_ylim([0,31])
-ax2.set_yticks([0, 15, 30])
-ax2.set_yticklabels([0, 15, "> 30"])
+ax2.set_yticks([0, 14, 28])
+ax2.set_yticklabels([0, 14, "> 28"])
 ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
 ax2.set_xlabel("P$_0$%")
 fig2.subplots_adjust(

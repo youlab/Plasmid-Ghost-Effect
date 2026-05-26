@@ -146,10 +146,10 @@ for i, plasmid in enumerate(Plasmids):
             ax.errorbar(time, abundance[j, k, :], se_abundance[j, k, :], marker='None', linewidth=0, elinewidth=1,
                         capsize=2, color="k", zorder=zorder)
     ax.fill_between(x=[2, 3], y1=[1, 1], y2=[150, 150], color="#808080", zorder=-20, alpha=0.3)#, lw=0.2)
-    if plasmid=="R6K":
-        ax.text(x=0.94, y=yloc[plasmid], s=f"Comm57\n{plasmid}", ha="right", transform=ax.transAxes)
-    else:
-        ax.text(x=0.94, y=yloc[plasmid], s=plasmid, ha="right", transform=ax.transAxes)
+    ax.set_title(f"Comm57+{plasmid}", fontsize=12)
+    if plasmid == "pCU1":
+        ax.set_xlabel("time (days)")
+        ax.set_ylabel("P%",rotation=0,va="center",ha="right")
     ax.set_xlim([-1, 21])
     ax.set_xticks([0, 10, 20])
     ax.set_ylim([1, 150])

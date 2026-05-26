@@ -236,12 +236,14 @@ for i, plasmid in enumerate(Plasmids):
     ax2.text(1.5, np.max(HL) * 1.05, p_to_star(p_value2), ha='center', va='bottom', fontsize=12)
     ax2.plot([1,2], np.ones(2) * np.max(HL) * 1.1, c="k", lw=1)
     ax2.set_xticks(x)
-    ax2.set_xticklabels(["no pulse",f"+{Abs[i]}","invaded"],rotation=45,fontsize=12)
     ax2.set_ylim([0,19])
     ax2.set_ylim([0, np.max(HL) * 1.3])
     if plasmid == "pCU1":
         ax2.set_yticks([0, 5, 10])
+        ax2.set_xticklabels(["no pulse",f"+Ab","invaded"],rotation=45,fontsize=12)
+        ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
     else:
+        ax2.set_xticklabels([])
         ax2.set_yticks([0, 8, 17])
         ax2.set_yticklabels([0,8,">17"])
     # ax2.set_ylabel(r"$\tau_{1/2}$ (days)")

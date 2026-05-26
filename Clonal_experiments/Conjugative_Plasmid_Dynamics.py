@@ -138,7 +138,8 @@ for i,plasmid in enumerate(plasmids):
     if plasmid == "pCU1":
         ax2.set_ylim([0, 13])
         ax2.set_yticks([0,6,12])
-
+        ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
+        ax2.set_xlabel("P$_0$%")
     elif plasmid == "R6K":
         ax2.set_yticks([0,12,25])
         ax2.set_yticklabels([0,12,"> 25"])

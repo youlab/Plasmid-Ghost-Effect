@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import minimize
-from scipy.stats import norm
-from scipy.stats import t as t_stat
 
 cmap = plt.get_cmap('Set2')
 colors = [cmap(i) for i in np.linspace(0, 1, 8)]
@@ -62,6 +59,17 @@ time = np.arange(0,13,1)
 host = "MG1655"
 plasmids=["pSC101","colE1","pUC"]
 inits = np.array([100, 99, 90, 50, 20])
+PCN_file = np.genfromtxt(
+    "../qPCR/processed_data/PCN_summary_report.tsv",
+    delimiter="\t",
+    names=True,
+    dtype=None,
+    encoding="utf-8",
+)
+PCN_rows = np.atleast_1d(PCN_file)
+PCN = {row["plasmid"]: float(row["mean"]) for row in PCN_rows}
+SE_PCN = {row["plasmid"]: float(row["sem"]) for row in PCN_rows}
+
 fig,axes=plt.subplots(3,5,figsize=(8,5))
 for i,plasmid in enumerate(plasmids):
     abundance = np.load(f"./LT_data_py/{plasmid}_mean.npy")
@@ -122,6 +130,28 @@ for i,plasmid in enumerate(plasmids):
     HL[mask] = 12
     median = np.median(HL,axis=1)
 
+    print(f"{plasmid} half-lives (days):")
+    for k in range(n_ic):
+        mean_HL = np.mean(HL[k,:])
+        sd_HL = np.std(HL[k,:], ddof=1)
+        sem_HL = sd_HL / np.sqrt(bio_rep)
+        print(f"P0={inits[k]}%: {mean_HL:.2f} ± {sd_HL:.2f}, n = 3")
+        if k==4:
+            delta = np.log(2) / mean_HL
+            se_delta = np.log(2) * sem_HL / (mean_HL**2)
+            pcn = PCN[plasmid]
+            se_pcn = SE_PCN[plasmid]
+            kappa = 0.5**(pcn-1) * np.log2(500) / 24 # 500-fold daily dilution, converted to generation per hour
+            max_HL = np.log(delta / kappa) / delta
+            dmax_ddelta = (1.0 - np.log(delta / kappa)) / (delta**2)
+            dmax_dpcn = np.log(2) / delta
+            se_max_HL = np.sqrt((dmax_ddelta * se_delta)**2 + (dmax_dpcn * se_pcn)**2)
+            print(
+                f"fitness cost: {delta:.2f} ± {se_delta:.2f} day ^{-1}, "
+                f"expected half-life at P0 = 100%: {max_HL:.3e} ± {se_max_HL:.3e} days"
+            )
+
+
     for j in range(bio_rep):
         ax2.scatter(inits,HL[:,j],s=100,c=colors[0:5],zorder=10*bio_rep,linewidth=1,edgecolors='black')
         ax2.errorbar(inits, HL[:,j], SE_HL[:,j], marker='o', markersize=0, elinewidth=1, linewidth=0,
@@ -134,10 +164,10 @@ for i,plasmid in enumerate(plasmids):
     ax2.set_xticks([50,100])
 
     if plasmid == "pSC101":
-        ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
-        ax2.set_xlabel("P$_0$%")
         ax2.set_ylim([0, 6.6])
         ax2.set_yticks([0, 3, 6])
+        ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
+        ax2.set_xlabel("P$_0$%")
     elif plasmid == "colE1":
         ax2.set_ylim([0, 12])
         ax2.set_yticks([0,5,10])

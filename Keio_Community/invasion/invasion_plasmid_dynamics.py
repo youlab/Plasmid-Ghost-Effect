@@ -133,7 +133,6 @@ def visualize_dynamics(ax,time,data,data_se,color):
 
 Plasmids = ["R388","pCU1","R6K"]
 bio_rep = 3
-#yloc = {"R388":0.1,"RP4":0.1,"pCU1":0.85,"R6K":0.4}
 for i, plasmid in enumerate(Plasmids):
     if plasmid == "R388":
         post_Ab_abundance = np.load(f"./processed_data/post_antibiotic/{plasmid}_mean.npy")[1]
@@ -171,10 +170,11 @@ for i, plasmid in enumerate(Plasmids):
         ax.set_title(f"Comm57 + {plasmid}", fontsize = 12)
         ax.set_xlim([-1, 21])
         ax.set_xticks([0, 10, 20])
+        ax.set_yscale("log")
 
     ax.set_ylim([10, 150])
     ax.set_yticks([10, 100])
-    ax.set_yscale("log")
+
     fig.subplots_adjust(left=0.25, right=0.95, bottom=0.13, top=0.8)
 
     fig.savefig(f"./figures/{plasmid}_invasion_dynamics.png",dpi=300)
@@ -193,11 +193,11 @@ for i, plasmid in enumerate(Plasmids):
         SE_HL[0, k] = t_se
     # For invasion group
     for k in range(bio_rep):
-        t, t_se = loglinear_crossing_time(time_inv, inv_abundance[k], inv_se_abundance[k],
-                                          np.mean(inv_abundance[:,0]) / 2)
+        t, t_se = loglinear_crossing_time(time_inv, inv_abundance[k], inv_se_abundance[k],inv_abundance[k,0] / 2)
+                                          #np.mean(inv_abundance[:,0]) / 2)
         HL[1, k] = t - time_inv[0]  # start counting after the antibiotic pulse
         SE_HL[1, k] = t_se
-    print(np.mean(inv_abundance[:,0]) / 2)
+
     p_value, report = report_welch_t(HL[1,:], HL[0,:], group_names=(f"+ Ab","invasion"))
     print(f"\n{plasmid} Welch's t-test")
     print(report)
@@ -234,15 +234,6 @@ for i, plasmid in enumerate(Plasmids):
     ax2.set_xticklabels(["+Ab","invaded"])
     ax2.set_ylim([0,19])
     ax2.set_ylim([0, np.max(HL) * 1.3])
-    # if plasmid == "pCU1":
-    #     ax2.set_yticks([0, 5, 10])
-    # elif plasmid == "R388":
-    #     ax2.set_yticks([0, 6, 12, 17])
-    #     ax2.set_yticklabels([0,6,">12",">17"])
-    # else:
-    #     ax2.set_yticks([0, 8, 17])
-    #     ax2.set_yticklabels([0,8,">17"])
-    #ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
     fig2.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
     fig2.savefig(f"./figures/{plasmid}_invaded_half_life.png",dpi=300)
     fig2.savefig(f"./figures/{plasmid}_invaded_half_life.svg")

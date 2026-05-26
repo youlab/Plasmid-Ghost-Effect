@@ -1,0 +1,15 @@
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# local environments / editor settings
+.venv/
+.vscode/
+.idea/
+Growth_data/aborted/

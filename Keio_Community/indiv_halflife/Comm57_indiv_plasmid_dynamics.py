@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-cmap = plt.get_cmap('Set2')
-colors = [cmap(i) for i in np.linspace(0, 1, 8)]
+cmap = plt.get_cmap('Set3')
+colors = [cmap(i) for i in np.linspace(0, 1, 12)]
+colors = colors[2:4]
 def half_life(P0, b, k):
     a = b+k
     p0 = P0/100
@@ -54,11 +55,11 @@ def loglinear_crossing_time(
     se_cross = np.sqrt(var_t)
     return t_cross, se_cross
 
-time = np.array([0, 3, 6, ])
+time = np.array([0, 3, 6, 9, 14])
 
 plasmids=["pCU1","R6K"]
 inits = np.array([100, 90, 50])
-fig,axes=plt.subplots(2,3,figsize=(8,3.2))
+fig,axes=plt.subplots(2,3,figsize=(5,3.5))
 for i,plasmid in enumerate(plasmids):
     abundance = np.load(f"./processed_data/KV3_{plasmid}_mean.npy")
     se_abundance = np.load(f"./processed_data/KV3_{plasmid}_se.npy")
@@ -82,11 +83,12 @@ for i,plasmid in enumerate(plasmids):
             x = time[non_nan]
             yk=yk[non_nan]
             ykerr=ykerr[non_nan]
-            ax.plot(x,yk, color=colors[j], linewidth=1.5)
-            ax.scatter(x, yk, s=20, color=colors[j])
+            ax.plot(x,yk, color=colors[i], linewidth=1.5)
+            ax.scatter(x, yk, s=20, color=colors[i])
             ax.errorbar(x,yk,ykerr,marker='None',linewidth=0,elinewidth=1,capsize=2,color="k")
-        ax.set_xlim([-1, 26])
-        ax.set_xticks([0, 10, 20])
+        ax.hlines(abundance[j,0,0]/2, -1, 15, color='gray', linestyle='--', linewidth=1)
+        ax.set_xlim([-1, 15])
+        ax.set_xticks([0, 7, 14])
         ax.set_ylim([1, 120])
         ax.set_yticks([1, 10, 100])
         ax.set_yscale("log")
@@ -102,7 +104,11 @@ for i,plasmid in enumerate(plasmids):
             else:
                 ax.set_title("%i%%" % (inits[j]))
         if j==0:
-            ax.text(x=0.1,y=0.1,s=plasmid,fontsize=13,transform=ax.transAxes)
+            if plasmid == "pCU1":
+                label = "#3+pCU1"
+            else:
+                label = "#4+R6K"
+            ax.text(x=0.1,y=0.1,s=label,fontsize=13,transform=ax.transAxes)
     fig2, ax2 = plt.subplots(1, 1, figsize=(2.05, 1.9))
     HL=np.zeros((n_ic,bio_rep))
     SE_HL=np.zeros((n_ic,bio_rep))
@@ -127,27 +133,27 @@ for i,plasmid in enumerate(plasmids):
         SD_HL = np.std(HL[k,:], ddof=1)
         print(f"{plasmid} half-life at P0% = {inits[k]}: {mean_HL:.1f}±{SD_HL:.1f}, n = 3")
         for j in range(bio_rep):
-            ax2.scatter(inits[k],HL[k,j],s=100,color=colors[k],linewidth=1,edgecolors='black',zorder=k)
+            ax2.scatter(inits[k],HL[k,j],s=100,color=colors[i],linewidth=1,edgecolors='black',zorder=k)
 
             ax2.errorbar(inits[k], HL[k,j], SE_HL[k,j], marker='o', markersize=0, elinewidth=1, linewidth=0,
                          capsize=2, color="k",zorder=k)
     ax2.plot(inits,median,c='k',lw=1.5,zorder=-10)
 
-    ax2.text(x=0.1, y=0.9, s=f"DA28102\n{plasmid}", fontsize=13, ha="left", va="top", transform=ax2.transAxes)
-    ax2.set_xlim([10,105])
-    ax2.set_xticks([50,100])
-
-    # if plasmid == "pCU1":
-    #     ax2.set_ylim([0, 13])
-    #     ax2.set_yticks([0,6,12])
-
-    # elif plasmid == "R6K":
-    #     ax2.set_yticks([0,12,25])
-    #     ax2.set_yticklabels([0,12,"> 25"])
-    #     ax2.set_ylim([0,27])
+    ax2.text(x=0.1, y=0.9, s=f"Keio #{i+3}\n{plasmid}", fontsize=13, ha="left", va="top", transform=ax2.transAxes)
+    ax2.set_xlim([40,105])
+    ax2.set_xticks([50, 90, 100])
+    ax2.set_ylim([0,16])
+    ax2.set_yticks([0, 7, 14])
+    if plasmid == "R6K":
+        ax2.set_yticklabels([0, 7, "> 14"])
+    else:
+        ax2.set_yticklabels([0, 7, 14])
+    ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
+    ax2.set_xlabel("P$_0$%")
     fig2.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
     fig2.savefig(f"./figures/KV3_{plasmid}_halflife.png",dpi=300)
     fig2.savefig(f"./figures/KV3_{plasmid}_halflife.svg")
-fig.subplots_adjust(bottom=0.18)
+fig.tight_layout()
 fig.savefig(f"./figures/KV3_Plasmids_Dynamics.png",dpi=300)
+fig.savefig(f"./figures/KV3_Plasmids_Dynamics.svg",dpi=300)
 plt.show()

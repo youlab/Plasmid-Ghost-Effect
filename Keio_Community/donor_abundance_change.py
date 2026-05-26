@@ -39,7 +39,7 @@ for i, comm in enumerate(communities):
     df["condition"]+=(["no pulse"]*3+["+Ab"]*3)
     df["community"]+=[comm]*6
 df=pd.DataFrame(df)
-fig, ax = plt.subplots(1, 1, figsize=(3, 1.9))
+fig, ax = plt.subplots(1, 1, figsize=(4, 1.9))
 error_kw = dict(linewidth=0.8, color="k")
 sns.barplot(data=df,x="community",y="delta",hue="condition",ax=ax,errorbar="sd",facecolor="None",edgecolor="k",err_kws=error_kw, capsize=0.2, lw=0.8, legend=False)
 sns.stripplot(data=df,x="community",y="delta",hue="condition",ax=ax,palette=colors,dodge=True,jitter=True,zorder=-10)

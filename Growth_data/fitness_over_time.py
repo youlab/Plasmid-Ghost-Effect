@@ -219,8 +219,6 @@ for plasmid in plasmids:
             })
 
 summary = pd.DataFrame(summary_rows)
-#summary.to_excel("./processed_data/fitness_summary_by_plasmid_timepoint.xlsx", index=False)
-#print("Saved fitness summary table")
 print("\nFitness Summary:")
 print(summary.to_string(float_format="{:.2f}".format))
 

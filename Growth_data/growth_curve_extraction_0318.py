@@ -76,28 +76,6 @@ for i, label in enumerate(labels):
 df_timeseries_od = pd.DataFrame(OD_dict)
 df_timeseries_od.to_excel(f"./processed_data/ancestor/pSC101_OD.xlsx", index=False)
 
-
-# pSC101: LB
-# target_wells = ["E2","E3","E4","F2","F3","F4","G2","G3","G4"]
-# labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
-# pSC101_idx = _to_idx(target_wells)
-# pSC101_OD = df_OD[pSC101_idx, :] - blank_OD
-# pSC101_GFP = df_GFP[pSC101_idx, :] - blank_GFP
-
-# # Save blanked growth curve to xlsx
-# OD_dict = {"time": time}
-# GFP_dict = {"time": time}
-# for i, label in enumerate(labels):
-#     OD_dict[label] = pSC101_OD[i, :]
-#     GFP_dict[label] = pSC101_GFP[i, :]
-
-# df_timeseries_od = pd.DataFrame(OD_dict)
-# df_timeseries_od.to_excel(f"./processed_data/pSC101_ancestor_LB_OD.xlsx", index=False)
-
-# df_timeseries_gfp = pd.DataFrame(GFP_dict)
-# df_timeseries_gfp.to_excel(f"./processed_data/pSC101_ancestor_LB_GFP.xlsx", index=False)
-
-
 # colE1: LB + Kan
 target_wells = ["B5","B6","B7","C5","C6","C7","D5","D6","D7"]
 labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
@@ -115,31 +93,6 @@ for i, label in enumerate(labels):
 df_timeseries_od = pd.DataFrame(OD_dict)
 df_timeseries_od.to_excel(f"./processed_data/ancestor/colE1_OD.xlsx", index=False)
 
-# df_timeseries_gfp = pd.DataFrame(GFP_dict)
-# df_timeseries_gfp.to_excel(f"./processed_data/colE1_ancestor_LB+Kan_GFP.xlsx", index=False)
-
-
-# colE1: LB
-# target_wells = ["E5","E6","E7","F5","F6","F7","G5","G6","G7"]
-# labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
-# colE1_idx = _to_idx(target_wells)
-# colE1_OD = df_OD[colE1_idx, :] - blank_OD
-# colE1_GFP = df_GFP[colE1_idx, :] - blank_GFP
-
-# # Save blanked growth curve to xlsx
-# OD_dict = {"time": time}
-# GFP_dict = {"time": time}
-# for i, label in enumerate(labels):
-#     OD_dict[label] = colE1_OD[i, :]
-#     GFP_dict[label] = colE1_GFP[i, :]
-
-# df_timeseries_od = pd.DataFrame(OD_dict)
-# df_timeseries_od.to_excel(f"./processed_data/colE1_ancestor_LB_OD.xlsx", index=False)
-
-# df_timeseries_gfp = pd.DataFrame(GFP_dict)
-# df_timeseries_gfp.to_excel(f"./processed_data/colE1_ancestor_LB_GFP.xlsx", index=False)
-
-
 # pUC: LB + Spect
 target_wells = ["B8","B9","B10","C8","C9","C10","D8","D9","D10"]
 labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
@@ -156,29 +109,4 @@ for i, label in enumerate(labels):
 
 df_timeseries_od = pd.DataFrame(OD_dict)
 df_timeseries_od.to_excel(f"./processed_data/ancestor/pUC_OD.xlsx", index=False)
-
-# df_timeseries_gfp = pd.DataFrame(GFP_dict)
-# df_timeseries_gfp.to_excel(f"./processed_data/pUC_ancestor_LB+Spect_GFP.xlsx", index=False)
-
-
-# pUC: LB
-# target_wells = ["E8","E9","E10","F8","F9","F10","G8","G9","G10"]
-# labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
-# pUC_idx = _to_idx(target_wells)
-# pUC_OD = df_OD[pUC_idx, :] - blank_OD
-# pUC_GFP = df_GFP[pUC_idx, :] - blank_GFP
-
-# # Save blanked growth curve to xlsx
-# OD_dict = {"time": time}
-# GFP_dict = {"time": time}
-# for i, label in enumerate(labels):
-#     OD_dict[label] = pUC_OD[i, :]
-#     GFP_dict[label] = pUC_GFP[i, :]
-
-# df_timeseries_od = pd.DataFrame(OD_dict)
-# df_timeseries_od.to_excel(f"./processed_data/pUC_ancestor_LB_OD.xlsx", index=False)
-
-# df_timeseries_gfp = pd.DataFrame(GFP_dict)
-# df_timeseries_gfp.to_excel(f"./processed_data/pUC_ancestor_LB_GFP.xlsx", index=False)
-
 plt.show()

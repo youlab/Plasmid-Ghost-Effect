@@ -75,20 +75,6 @@ for i, label in enumerate(labels):
 df_timeseries_od = pd.DataFrame(OD_dict)
 df_timeseries_od.to_excel(f"./processed_data/ancestor/MG1655_OD.xlsx", index=False)
 
-# pCU1: LB + Cm
-# target_wells = ["B5","B6","B7","C5","C6","C7","D5","D6","D7"]
-# labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
-# pCU1_idx = _to_idx(target_wells)
-# pCU1_OD = df_OD[pCU1_idx, :] - blank_OD
-
-# # Save blanked growth curve to xlsx
-# OD_dict = {"time": time}
-# for i, label in enumerate(labels):
-#     OD_dict[label] = pCU1_OD[i, :]
-
-# df_timeseries_od = pd.DataFrame(OD_dict)
-# df_timeseries_od.to_excel(f"./processed_data/pCU1_ancestor_LB+Cm_OD.xlsx", index=False)
-
 # pCU1: LB + Cm + Carb
 target_wells = ["E5","E6","E7","F5","F6","F7","G5","G6","G7"]
 labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
@@ -102,20 +88,6 @@ for i, label in enumerate(labels):
 
 df_timeseries_od = pd.DataFrame(OD_dict)
 df_timeseries_od.to_excel(f"./processed_data/ancestor/pCU1_OD.xlsx", index=False)
-
-# R6K: LB + Cm
-# target_wells = ["B8","B9","B10","C8","C9","C10","D8","D9","D10"]
-# labels = ["c1_1","c2_1","c3_1","c1_2","c2_2","c3_2","c1_3","c2_3","c3_3"]
-# R6K_idx = _to_idx(target_wells)
-# R6K_OD = df_OD[R6K_idx, :] - blank_OD
-
-# # Save blanked growth curve to xlsx
-# OD_dict = {"time": time}
-# for i, label in enumerate(labels):
-#     OD_dict[label] = R6K_OD[i, :]
-
-# df_timeseries_od = pd.DataFrame(OD_dict)
-# df_timeseries_od.to_excel(f"./processed_data/R6K_ancestor_LB+Cm_OD.xlsx", index=False)
 
 # R6K: LB + Cm + Strp
 target_wells = ["E8","E9","E10","F8","F9","F10","G8","G9","G10"]

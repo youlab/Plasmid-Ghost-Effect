@@ -107,6 +107,13 @@ for i,plasmid in enumerate(plasmids):
             t,t_se=loglinear_crossing_time(time,abundance[j,k,:],std_abundance[j,k,:])
             HL[j,k]=t-3 # start counting after the antibiotic pulse
             SE_HL[j,k]=t_se
+    
+    if plasmid=="pSC101":
+        mean_HL = np.mean(HL,axis=1)
+        median_HL = np.median(HL,axis=1)
+        SD_HL = np.std(HL,axis=1,ddof=1)
+        print(f"pSC101 half-life at full dosage 1x: mean {mean_HL[-1]:.1f} ± SD {SD_HL[-1]:.1f} days")
+        print(f"pSC101 half-life at full dosage 1x: median {median_HL[-1]:.1f} days")
 
     fig1, ax1 = plt.subplots(1, 1, figsize=(2.05, 1.9))
     HL[np.isnan(HL)]=17

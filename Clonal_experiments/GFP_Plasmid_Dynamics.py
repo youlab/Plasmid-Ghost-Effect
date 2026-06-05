@@ -37,7 +37,7 @@ def loglinear_crossing_time(
     # 2. Locate the bracketing segment ----------------------------------------
     idx = np.where(g <= g_star)[0]                # first point below threshold
     if len(idx) == 0 or idx[0] == 0:
-        print("threshold never reached")
+        #print("threshold never reached")
         return np.nan, np.nan                     # threshold never reached
 
     i  = idx[0] - 1                               # segment [i, i+1]
@@ -132,6 +132,8 @@ for i,plasmid in enumerate(plasmids):
 
     print(f"{plasmid} half-lives (days):")
     for k in range(n_ic):
+        print(f"{plasmid} half-life at P0% = {inits[k]}: ")
+        print(HL[k,:])
         mean_HL = np.mean(HL[k,:])
         sd_HL = np.std(HL[k,:], ddof=1)
         sem_HL = sd_HL / np.sqrt(bio_rep)

@@ -123,9 +123,8 @@ for i,strain in enumerate(Strains):
 
     print(f"{strain}+R388 half-lives (days):")
     for k in range(n_ic):
-        mean_HL = np.mean(HL[k,:])
-        sem_HL = np.std(HL[k,:], ddof=1) / np.sqrt(bio_rep)
-        print(f"P0={inits[k]}%: {mean_HL:.2f} ± {sem_HL:.2f}")
+        print(f"P0={inits[k]}%:")
+        print(HL[k,:])
 
     for k in range(n_ic):
         mean_HL = np.mean(HL[k,:])

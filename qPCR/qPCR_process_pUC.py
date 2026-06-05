@@ -46,7 +46,7 @@ def linear_fit(x, y):
     return popt, pcov, p_value, R2, x_band, y_band, ci_y
 
 # Calibration data
-file = "./Raw_data/pUC_R6K_calibration.xlsx"
+file = "./Raw_data/pUC_calibration.xlsx"
 
 df = pd.read_excel(file, sheet_name="Results")
 
@@ -114,7 +114,7 @@ fig.tight_layout()
 fig.savefig("./figures/MG1655-pUC-calibration.png", dpi=300)
 fig.savefig("./figures/MG1655-pUC-calibration.svg", dpi=300)
 # measurement data
-file = "./Raw_data/0507_pCU1&all_measurement.xlsx"
+file = "./Raw_data/measurements.xlsx"
 
 df = pd.read_excel(file, sheet_name="Results")
 

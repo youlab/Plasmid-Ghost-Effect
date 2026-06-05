@@ -203,6 +203,8 @@ for i, plasmid in enumerate(Plasmids):
     print(report1)
     p_value2, report2 = report_welch_t(HL[2,:], HL[1,:], group_names=("invaded",f"+{Abs[i]}"))
     print(report2)
+    p_value3, report3 = report_welch_t(HL[2,:], HL[0,:], group_names=("invaded","LB"))
+    print(report3)
 
     # HL: shape (conditions, bio_rep)
     # SE_HL: shape (conditions, bio_rep)
@@ -211,9 +213,6 @@ for i, plasmid in enumerate(Plasmids):
     # --- summary stats ---
     means = HL.mean(axis=1)
     sems = HL.std(axis=1, ddof=1) / np.sqrt(bio_rep)  # SEM across biological replicates
-    # print(f"Comm57+{plasmid} LB Group half-life: {means[0]:.2f}±{sems[0]:.2f} days; "
-    #       f"Ab Group half-life: {means[1]:.1f}±{sems[1]:.1f} days"
-    #       f"invaded Group half-life: {means[2]:.1f}±{sems[2]:.1f} days")
 
     # --- plot ---
     x = np.arange(conditions)

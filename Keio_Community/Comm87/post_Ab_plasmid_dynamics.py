@@ -150,63 +150,7 @@ ax.set_xticks([0, 18,36])
 ax.set_ylim([1, 150])
 ax.set_yticks([1, 10, 100])
 ax.set_yscale("log")
-# ax.set_xlabel("time (days)")
-# ax.set_ylabel("P%",rotation=0,va="center",ha="right")
-fig.subplots_adjust(left=0.25, right=0.95, bottom=0.23, top=0.95)
+fig.subplots_adjust(left=0.25, right=0.95, bottom=0.1, top=0.82)
 fig.savefig("./figures/Comm87_plasmid_dynamics.png",dpi=300)
 fig.savefig("./figures/Comm87_plasmid_dynamics.svg")
-
-fig2, ax2 = plt.subplots(1, 1, figsize=(2.05, 1.9))
-HL = np.zeros((n_ab, bio_rep))
-SE_HL = np.zeros((n_ab, bio_rep))
-# For LB group: calculate half-life from day 0
-P0 = 25
-t_start = 0
-for k in range(bio_rep):
-    t, t_se = loglinear_crossing_time(time[t_start:], abundance[0, k, t_start:], se_abundance[0, k, t_start:], P0/2)
-    HL[0, k] = t
-    SE_HL[0, k] = t_se
-# For LB+Trim group: calculate half-life from day 3
-P0 = 100
-t_start = 2
-for k in range(bio_rep):
-    t, t_se = loglinear_crossing_time(time[t_start:], abundance[1, k, t_start:], se_abundance[1, k, t_start:], P0/2)
-    HL[1, k] = t - 3  # start counting after the antibiotic pulse
-    SE_HL[1, k] = t_se
-p_value, report = report_welch_t(HL[1,:], HL[0,:], group_names=("+Trim","LB"))
-print(f"Comm87+R388 Welch's t-test")
-print(report)
-
-# HL: shape (n_ab, bio_rep)
-# SE_HL: shape (n_ab, bio_rep)
-n_ab, bio_rep = HL.shape
-
-# --- summary stats ---
-means = HL.mean(axis=1)
-sems  = HL.std(axis=1, ddof=1) / np.sqrt(bio_rep)  # SEM across biological replicates
-# --- plot ---
-x = np.arange(n_ab)
-
-# bars + error bars
-error_kw = {'elinewidth': 1.2, 'capsize': 3, 'capthick': 1.2, 'color': 'blue'}
-bars = ax2.bar(x, means, yerr=sems, width=0.6, error_kw=error_kw, lw=1.2, facecolor="None", edgecolor="k", zorder=2)
-
-# jittered points (strip-like)
-rng = np.random.default_rng(42)  # set seed for reproducible jitter
-for j in range(n_ab):
-    jitter_scale = 0.1 if j==0 else 0.04
-    x_j = rng.normal(loc=x[j], scale=jitter_scale, size=bio_rep)
-    ax2.scatter(x_j, HL[j], s=60, linewidths=1, facecolor=colors[j], edgecolors='k', zorder=3)
-    ax2.errorbar(x_j, HL[j], SE_HL[j], marker='o', markersize=0, elinewidth=1.2, linewidth=0,
-                 capsize=2, capthick=1.2, color="k", zorder=4)
-ax2.text(0.5, np.max(HL)*1.08, p_to_star(p_value),ha='center', va='bottom', fontsize=12)
-ax2.plot(x,np.ones(2)*np.max(HL)*1.13,c="k",lw=1)
-
-ax2.set_ylim([0,np.max(HL)*1.3])
-ax2.set_xticks(x)
-ax2.set_xticklabels(["no pulse","+Trim"])
-ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
-fig2.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
-fig2.savefig("./figures/Comm87_half_life.png",dpi=300)
-fig2.savefig("./figures/Comm87_half_life.svg")
 plt.show()

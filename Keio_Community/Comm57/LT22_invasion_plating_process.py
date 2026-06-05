@@ -1,6 +1,5 @@
 """
 Keio community plasmid dynamics after invasion by the plasmid-free dominant strain
-Comm87+R388 <- Keio V2 #76
 Comm57+pCU1 <- Keio V3 #3
 Comm57+R6K <- Keio V3 #4
 ------------------------------------------------
@@ -25,22 +24,18 @@ def mean_se(vals):
         se = np.nan
     return m, se
 
-# 100-fold dilution
 # ---------------------------------------------------------------------
 # 1. constants & containers
 # ---------------------------------------------------------------------
 days           = [0, 2, 5, 8, 10, 15]
-Plasmids     = ["R388", "PCU1", "R6K"]
+Plasmids     = ["PCU1", "R6K"]
 
 bio_rep        = 3
 plate_rep      = 3
 
 T              = len(days)
-L              = len(Plasmids)
 
 # pre-allocate with NaN
-R388_mean = np.full((bio_rep, T), np.nan)
-R388_se   = np.full_like(R388_mean, np.nan)
 PCU1_mean = np.full((bio_rep, T), np.nan)
 PCU1_se   = np.full_like(PCU1_mean, np.nan)
 R6K_mean = np.full((bio_rep, T), np.nan)
@@ -55,7 +50,7 @@ for t_idx, t in enumerate(days):
     # pandas keeps NaNs as float('nan') automatically
     df  = pd.read_excel(excel_file, sheet_name=f"Day{t}", usecols="C:H", skiprows=0, nrows=24)
     data = df.to_numpy(dtype=float)          # shape (6, 24)
-    for p in range(3):                         # plasmid condition; 0 = R388, 1 = PCU1, 2 = R6K
+    for p in range(1,3):                         # plasmid condition; 1 = PCU1, 2 = R6K
         for br in range(bio_rep):          # biological replicate
             # ----- locate the correct row (0-based) ----------------
             row_idx = (bio_rep * p) + br
@@ -76,10 +71,7 @@ for t_idx, t in enumerate(days):
             else:
                 mean_P, se_P = np.nan, np.nan
 
-            if p == 0:
-                R388_mean[br, t_idx] = mean_P
-                R388_se[br, t_idx] = se_P
-            elif p == 1:
+            if p == 1:
                 PCU1_mean[br, t_idx] = mean_P
                 PCU1_se[br, t_idx] = se_P
             elif p == 2:
@@ -90,8 +82,6 @@ for t_idx, t in enumerate(days):
 # 3. save one *_mean.npy and *_std.npy per plasmid
 # ---------------------------------------------------------------------
 
-np.save("./processed_data/R388_inv_mean.npy", R388_mean)
-np.save("./processed_data/R388_inv_se.npy", R388_se)
 np.save("./processed_data/PCU1_inv_mean.npy", PCU1_mean)
 np.save("./processed_data/PCU1_inv_se.npy", PCU1_se)
 np.save("./processed_data/R6K_inv_mean.npy", R6K_mean)

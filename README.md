@@ -115,7 +115,7 @@ The community dynamics datasets `Comm*.npy` were copied under the `coposition_al
 - `LT1_plasmid_dynamics.py` visualizes plasmid dynamics over different conditions.
 
 ## Folder: Chemical_Treatment
-Plasmid pSC101 dynamics in cloncal E. coli MG1655 under various chemical treatments. (Fig. S8)
+Plasmid pSC101 dynamics in cloncal E. coli MG1655 under various chemical treatments. (Fig. S14)
 - `Plating_Data_Processing.py` takes in selective plating results from `./Chemical_LT14.xlsx` and transform them into organized `*_mean.npy`and `*_se.npy` files.
 - `Chemical_Curing_Plasmid_dynamics.py` visualizes plasmid dynamics and their half-lives over different conditions.
 

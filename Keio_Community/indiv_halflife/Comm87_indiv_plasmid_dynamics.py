@@ -39,7 +39,7 @@ def loglinear_crossing_time(
     # 2. Locate the bracketing segment ----------------------------------------
     idx = np.where(g <= g_star)[0]                # first point below threshold
     if len(idx) == 0 or idx[0] == 0:
-        print("threshold never reached")
+        #print("threshold never reached")
         return np.nan, np.nan                     # threshold never reached
 
     i  = idx[0] - 1                               # segment [i, i+1]

@@ -107,6 +107,10 @@ The community dynamics datasets `Comm*.npy` were copied under the `coposition_al
 - `diversity_change.py` takes the above datasets, and calculate the inverse Simpson index of the communities across time points.
 - `donor_abundance_change.py` calculates the change in donor abundance between day 2 and 3.
 
+### Folder indiv_halflife: plasmid half-lives in individual Keio strains
+- `*_indiv_processing.py` processes selective plating results of plasmids in individual strains. In particular, strain 3 (pCU1) and 4 (R6K) in Comm57, and strain 1, 15, and 76 in Comm87 carrying R388. 
+- `*_indiv_plasmid_dynamics.py` takes the `.npy` files and visualizes plasmid dynamics and dependence of plasmid half-lives on the initial plasmid abudances.
+
 ## Folder: Sink_Community
 16S sequencing and bioinformatic analyses were performed by SeqCenter LLC. This code base provides downstream visualization and analyses based on `./raw_data/16S_composition.xlsx` and GFP/OD readout in `./raw_data/Synk_LT1.xlsx`. Note that 16S compositions are only available for experiments with sponges, while GFP/OD data are available for experiments done with and without sponges. (Fig. 5 & S13)
 - `16S_processing.py` takes in `./raw_data/16S_composition.xlsx`, cutoff to genus-evel composition, and organize the data to `./processed_data/*.npy`.

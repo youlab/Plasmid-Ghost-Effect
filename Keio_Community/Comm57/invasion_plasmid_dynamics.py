@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
@@ -46,9 +47,9 @@ def report_welch_t(a, b, group_names=("Group A", "Group B"), alpha=0.05):
     J = 1 - 3 / (4*(n1 + n2) - 9)  # Hedges' small-sample correction
     g = J * d if np.isfinite(d) else np.nan
 
-    # p-value formatting (APA-ish)
+    # p-value formatting: report the actual value, in scientific notation when very small
     if p_value < 0.001:
-        p_str = "p<.001"
+        p_str = f"p={p_value:.3e}"
     else:
         p_str = f"p={p_value:.3f}".replace("0.", ".")
 
@@ -197,6 +198,13 @@ for i, plasmid in enumerate(Plasmids):
         HL[2, k] = t - time_inv[0]  # start counting after the antibiotic pulse
         SE_HL[2, k] = t_se
 
+
+    # save the half-lives of each biological replicate under each condition
+    records = {"condition": ["LB", "LB+Ab", "invasion"]}
+    for k in range(bio_rep):
+        records[f"tau_rep{k+1}"] = HL[:, k]
+        records[f"se_rep{k+1}"] = SE_HL[:, k]
+    pd.DataFrame(records).to_csv(f"./processed_data/{plasmid}_{dilution}_halflife_winvasion.csv", index=False)
 
     print(f"\nComm57+{plasmid} Welch's t-test")
     p_value1, report1 = report_welch_t(HL[1,:], HL[0,:], group_names=(f"+{Abs[i]}","LB"))

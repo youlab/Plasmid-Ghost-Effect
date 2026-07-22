@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
@@ -143,6 +144,15 @@ for j in range(n_ab):
         ax.plot(time, abundance[j,k,:], color=colors[j], linewidth=1.5, zorder=zorder)
         ax.scatter(time, abundance[j,k,:], s=60, color=colors[j], linewidth=1, edgecolors='black', zorder=zorder)
         ax.errorbar(time, abundance[j,k,:], se_abundance[j,k,:], marker='None', linewidth=0, elinewidth=1, capsize=2, color="k", zorder=zorder)
+# save the plotted time series of each biological replicate (index 0 = LB, index 1 = LB+Ab)
+records = {"time": time}
+for j in range(n_ab):
+    cond = "noAb" if j == 0 else "Ab"
+    for k in range(bio_rep):
+        records[f"mean_{cond}_rep{k+1}"] = abundance[j, k, :]
+        records[f"se_{cond}_rep{k+1}"] = se_abundance[j, k, :]
+pd.DataFrame(records).to_csv("./processed_data/R388_dynamics.csv", index=False)
+
 ax.fill_between(x=[2, 3], y1=[1, 1], y2=[150, 150], color="#808080", zorder=-20, alpha=0.3)#, lw=0.2)
 ax.set_title(f"Comm87+R388", fontsize=12)
 ax.set_xlim([-1, 37])

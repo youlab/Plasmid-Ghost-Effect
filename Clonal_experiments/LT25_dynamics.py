@@ -151,6 +151,8 @@ summary = (
         median="median",
         q1=lambda x: x.quantile(0.25),
         q3=lambda x: x.quantile(0.75),
+        min="min",
+        max="max",
     )
 )
 

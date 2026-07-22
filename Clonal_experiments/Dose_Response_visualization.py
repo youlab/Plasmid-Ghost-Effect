@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 cmap = plt.get_cmap('Set2')
@@ -116,7 +117,17 @@ for i,plasmid in enumerate(plasmids):
         print(f"pSC101 half-life at full dosage 1x: median {median_HL[-1]:.1f} days")
 
     fig1, ax1 = plt.subplots(1, 1, figsize=(2.05, 1.9))
-    HL[np.isnan(HL)]=17
+    censored = np.isnan(HL)
+    HL[censored]=17
+
+    # save the half-lives of each biological replicate at each antibiotic dose
+    # (the no-antibiotic control is plotted at 1/128 but is really a zero dose)
+    records = {"fold_dilution": np.concatenate(([0.0], fold_dilution[1:]))}
+    for k in range(bio_rep):
+        records[f"mean_rep{k+1}"] = HL[:,k]
+        records[f"se_rep{k+1}"] = SE_HL[:,k]
+        records[f"right_censored_rep{k+1}"] = censored[:,k]
+    pd.DataFrame(records).to_csv(f"./LT_Data_py/{plasmid}_dose_response_halflife.csv", index=False)
     for j in range(bio_rep):
         tau = HL[:,j]
         se = SE_HL[:,j]

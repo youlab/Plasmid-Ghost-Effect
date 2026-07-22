@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 cmap = plt.get_cmap('Set2')
@@ -129,6 +130,16 @@ for i,plasmid in enumerate(plasmids):
     mask = np.isnan(HL)
     HL[mask] = 12
     median = np.median(HL,axis=1)
+
+    # save the per-replicate half-lives for each initial condition
+    df = pd.DataFrame({
+        "P0": np.repeat(inits[:n_ic], bio_rep),
+        "replicate": np.tile(np.arange(1, bio_rep + 1), n_ic),
+        "half_life": HL.ravel(),
+        "half_life_se": SE_HL.ravel(),
+        "right_censored": mask.ravel(),
+    })
+    df.to_csv(f"./LT_Data_py/{plasmid}_halflife.csv", index=False)
 
     print(f"{plasmid} half-lives (days):")
     for k in range(n_ic):

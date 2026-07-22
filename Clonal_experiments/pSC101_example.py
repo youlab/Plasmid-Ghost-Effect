@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 cmap = plt.get_cmap('Set2')
@@ -26,12 +27,18 @@ bio_rep = abundance.shape[1] # number of biological replicates
 
 mean_dyn = np.mean(abundance,axis=1)
 std_dyn = np.std(abundance,axis=1,ddof=1)
+records = {"time": time}
 for j in range(n_ic):
     yk=mean_dyn[j,:]
     ykerr=std_dyn[j,:]
+    records[f"mean_{inits[j]}%"] = yk
+    records[f"std_{inits[j]}%"] = ykerr
     ax1.plot(time,yk, color=colors[j], linewidth=1.5, zorder=-10)
     ax1.scatter(time,yk, s=80, color=colors[j], linewidth=1, edgecolors='black')
     ax1.errorbar(time,yk,ykerr,marker='None',linewidth=0,elinewidth=1,capsize=2,color="k")
+
+# save the plotted mean dynamics and error bars for each initial condition
+pd.DataFrame(records).to_csv(f"./LT_Data_py/{plasmid}_dynamics.csv", index=False)
 
 ax1.set_xlim([-0.3, 10.3])
 ax1.set_xticks([0, 5, 10])
@@ -40,7 +47,6 @@ ax1.set_yticks([1, 10, 100])
 ax1.set_yscale("log")
 ax1.set_xlabel("time (days)")
 ax1.set_ylabel("P%",rotation=0,va="center",ha="right")
-#ax1.text(x=0.1,y=0.1,s=f"MG1655\n{plasmid}",transform=ax1.transAxes)
 
 fig.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
 fig.savefig("./figures/pSC101_dynamics.png",dpi=300)

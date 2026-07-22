@@ -1,5 +1,14 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+
+
+def dose_label(j):
+    """Antibiotic pulse dose as a fraction of the MIC: 0, 1/128, ..., 1."""
+    if j == 0:
+        return "0"
+    exponent = 7 - j
+    return "1" if exponent == 0 else f"1/{2**exponent}"
 
 cmap = plt.get_cmap('Set2')
 colors = [cmap(i) for i in np.linspace(0, 1, 8)]
@@ -68,4 +77,22 @@ for i,plasmid in enumerate(plasmids):
 
 fig1.tight_layout()
 fig1.savefig("./figures/dose_response_timeseries.png",dpi=300)
+
+# ------------------------------------------------------------------
+# 2. export the time series averaged over biological replicates ----
+# ------------------------------------------------------------------
+for plasmid in plasmids:
+    abundance = np.load(f"./LT_data_py/{plasmid}_dose_response_mean.npy")
+
+    # same hard floor as the plots, so the exported values match the figure
+    abundance[abundance < 0.1] = 0.1
+
+    n_ab = abundance.shape[0]
+
+    records = {"time": time}
+    for j in range(n_ab):
+        records[f"mean_{dose_label(j)}"] = np.nanmean(abundance[j,:,:], axis=0)
+        records[f"std_{dose_label(j)}"] = np.nanstd(abundance[j,:,:], axis=0, ddof=1)
+    pd.DataFrame(records).to_csv(f"./LT_Data_py/{plasmid}_dose_response_timeseries.csv", index=False)
+
 plt.show()

@@ -19,9 +19,11 @@ def p_to_star(p):
 
 df = {"delta":[],"condition":[],"community":[]}
 communities = ["Comm87","Comm57_R6K_100","Comm57_pCU1_100","Comm57_R388_100","Comm57_RP4_100"]
+plasmids = ["R388","R6K","pCU1","R388","RP4"]
 p_values = []
 delta_max = []
 donor_ids = [0,3,2,0,1]
+stats_rows = []
 
 for i, comm in enumerate(communities):
     donor = donor_ids[i]
@@ -32,13 +34,56 @@ for i, comm in enumerate(communities):
     delta_NoAb = delta[0:3]
     delta_Ab = delta[3:]
     delta_max.append(np.max(np.abs(delta)))
-    t_stat, p_value = stats.ttest_ind(delta_NoAb, delta_Ab, equal_var=False) # two-sided Welch's t-test
-    print(f"{comm} Welch's t-test (two-sided): {p_value:.2e}")
+    # contrast is +Ab - no pulse, so the sign matches the direction of the antibiotic effect
+    t_stat, p_value = stats.ttest_ind(delta_Ab, delta_NoAb, equal_var=False) # two-sided Welch's t-test
+    n1, n2 = len(delta_NoAb), len(delta_Ab)
+    s1, s2 = delta_NoAb.std(ddof=1), delta_Ab.std(ddof=1)
+    # Welch-Satterthwaite degrees of freedom
+    v_NoAb = s1**2/n1
+    v_Ab = s2**2/n2
+    dof = (v_NoAb+v_Ab)**2/(v_NoAb**2/(n1-1)+v_Ab**2/(n2-1))
+    # 95% CI of the difference of means (Welch)
+    mean_diff = delta_Ab.mean()-delta_NoAb.mean()
+    se_diff = np.sqrt(v_NoAb+v_Ab)
+    t_crit = stats.t.ppf(0.975, dof)
+    ci_low, ci_high = mean_diff-t_crit*se_diff, mean_diff+t_crit*se_diff
+    # effect size: Cohen's d (pooled sd), 95% CI from the normal-approximation SE
+    s_pooled = np.sqrt(((n1-1)*s1**2+(n2-1)*s2**2)/(n1+n2-2))
+    d = mean_diff/s_pooled
+    se_d = np.sqrt((n1+n2)/(n1*n2)+d**2/(2*(n1+n2-2)))
+    d_low, d_high = d-1.96*se_d, d+1.96*se_d
     p_values.append(p_value)
+    stats_rows.append({
+        "comparison": f"{plasmids[i]} in {comm.split('_')[0]}",
+        "n_per_group": n1,
+        "mean_no_pulse": delta_NoAb.mean(), "sd_no_pulse": s1,
+        "mean_Ab": delta_Ab.mean(), "sd_Ab": s2,
+        "mean_diff": mean_diff, "diff_CI_low": ci_low, "diff_CI_high": ci_high,
+        "cohens_d": d, "d_CI_low": d_low, "d_CI_high": d_high,
+        "t": t_stat, "df": dof, "p": p_value, "sig": p_to_star(p_value),
+    })
     df["delta"]+=list(delta)
     df["condition"]+=(["no pulse"]*3+["+Ab"]*3)
     df["community"]+=[comm]*6
 df=pd.DataFrame(df)
+df.to_csv("./figures/donor_abundance_change_data.csv", index=False) # per-replicate source data
+
+stats_table = pd.DataFrame(stats_rows)
+stats_table.to_csv("./figures/donor_abundance_change_stats.csv", index=False) # full precision
+
+# printed table: n, t, p, mean difference [95% CI], d -- rounded to one decimal (p exact)
+report = pd.DataFrame({
+    "comparison": stats_table["comparison"],
+    "n": stats_table["n_per_group"],
+    "t (df)": [f"{r.t:.1f} ({r.df:.1f})" for r in stats_table.itertuples()],
+    "p": [f"{r.p:.3e} {r.sig}" for r in stats_table.itertuples()],
+    "mean diff [95% CI]": [f"{r.mean_diff:.2f} [{r.diff_CI_low:.2f}, {r.diff_CI_high:.2f}]"
+                           for r in stats_table.itertuples()],
+    "Cohen's d [95% CI]": [f"{r.cohens_d:.1f} [{r.d_CI_low:.1f}, {r.d_CI_high:.1f}]"
+                           for r in stats_table.itertuples()],
+})
+print("--- Delta donor: +Ab vs no pulse, two-sided Welch's t-test ---")
+print(report.to_string(index=False))
 fig, ax = plt.subplots(1, 1, figsize=(4, 1.9))
 error_kw = dict(linewidth=0.8, color="k")
 sns.barplot(data=df,x="community",y="delta",hue="condition",ax=ax,errorbar="sd",facecolor="None",edgecolor="k",err_kws=error_kw, capsize=0.2, lw=0.8, legend=False)

@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 cmap = plt.get_cmap('Set2')
@@ -120,6 +121,16 @@ for i,strain in enumerate(Strains):
     mask = np.isnan(HL)
     HL[mask] = np.max(time)
     median = np.median(HL,axis=1)
+
+    # save the per-replicate half-lives for each initial condition
+    df = pd.DataFrame({
+        "P0": np.repeat(inits[:n_ic], bio_rep),
+        "replicate": np.tile(np.arange(1, bio_rep + 1), n_ic),
+        "half_life": HL.ravel(),
+        "half_life_se": SE_HL.ravel(),
+        "right_censored": mask.ravel(),
+    })
+    df.to_csv(f"./processed_data/{strain}+R388_halflife.csv", index=False)
 
     print(f"{strain}+R388 half-lives (days):")
     for k in range(n_ic):

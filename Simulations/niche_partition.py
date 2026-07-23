@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from equations import func
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
@@ -49,6 +50,16 @@ p = results[:,Ns:]
 s = results[:, 0:Ns]+results[:, Ns:]
 tot = np.sum(s, axis=1)
 
+# save the total plasmid dynamics with and without the antibiotic pulse
+# (the two runs sit on slightly different time grids, so the shorter one is padded)
+n_pad = len(time) - len(time0)
+pd.DataFrame({
+    "time_noAb": np.concatenate([time0, np.full(n_pad, np.nan)]),
+    "P_noAb": np.concatenate([p_tot0, np.full(n_pad, np.nan)]),
+    "time_Ab": time,
+    "P_Ab": p_tot,
+}).to_csv("./data/niche_partition_plasmid_dynamics.csv", index=False)
+
 ax1.plot(time0,p_tot0,c=colors[0],linewidth=2,zorder=-10)
 ax1.plot(time,p_tot,c=colors[1],linewidth=2,zorder=-10)
 ax1.fill_between(x=[t1/24, t2/24], y1=np.ones(2), y2=np.ones(2) * 120, facecolor="#808080", alpha=0.3, zorder=-10)
@@ -65,6 +76,15 @@ fig1.savefig("./figures/niche_partition_non_mobilizable.svg")
 fig2,ax2=plt.subplots(1,1,figsize=(2.05, 1.9))
 s1 = s[:,0]/tot
 p1 = p[:,0]/tot
+# save the community composition (fractions of the total population)
+pd.DataFrame({
+    "time": time,
+    "species1": s1,
+    "species1_plasmid": p1,
+    "species2": s[:,1]/tot,
+    "species2_plasmid": p[:,1]/tot,
+}).to_csv("./data/niche_partition_composition.csv", index=False)
+
 ax2.plot(time,s1,c="k",linewidth=1.5)
 ax2.fill_between(x=time, y1=np.zeros(len(time)), y2=p1, color="#FF7F0E", alpha=1)
 ax2.fill_between(x=[t1/24, t2/24], y1=np.zeros(2), y2=np.ones(2), facecolor="#808080", alpha=0.3, zorder=-10)

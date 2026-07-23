@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from equations import func
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
@@ -28,16 +29,21 @@ fig, ax = plt.subplots(1, 1, figsize=(2.05, 1.9))
 fig2, ax2 = plt.subplots(1,1,figsize=(2.05, 1.9))
 halflife_sim=[]
 p0_list=np.array([100,99,90,50,20])
+timeseries={"time":t0}
 for i,p0 in enumerate(p0_list):
     init = np.array([100 - p0, p0])/100
     results = odeint(func, init, time, args=(para,))
     p=results[:,1]/np.sum(results,axis=1)*100
     ax.plot(t0,p,c=colors[i],lw=2)
+    timeseries[f"P_{p0}%"]=p
 
     t_new = np.linspace(0,t0[-1],1000)
     p_new = np.interp(t_new, t0, p)
     hl = t_new[p_new<(p0/2)][0]
     halflife_sim.append(hl)
+
+# save the simulated plasmid dynamics (time in days, one column per initial condition)
+pd.DataFrame(timeseries).to_csv("./data/plasmid_dynamics_continuous.csv", index=False)
 
 ax.set_xlabel("time (days)")
 ax.set_ylabel("P%",rotation=0,va="center",ha="right")
@@ -53,6 +59,24 @@ popt, pcov = curve_fit(half_life, p0_list, halflife_sim, p0=(0.7, 0.69))
 print(popt)
 pp = np.linspace(1,100,300)
 halflife_theo=half_life(pp,*popt)
+
+# save the simulated half-lives, together with the fitted analytical curve
+pd.DataFrame({
+    "P0": p0_list,
+    "half_life": halflife_sim,
+    "a_fit": popt[0],
+    "b_fit": popt[1],
+}).to_csv("./data/half_life_continuous.csv", index=False)
+# the fitted curve and the extracted half-lives have different lengths,
+# so the shorter pair is padded with blanks
+n_pad = len(pp) - len(p0_list)
+pd.DataFrame({
+    "P0_fit": pp,
+    "half_life_fit": halflife_theo,
+    "P0_sim": np.concatenate([p0_list, np.full(n_pad, np.nan)]),
+    "half_life_sim": np.concatenate([halflife_sim, np.full(n_pad, np.nan)]),
+}).to_csv("./data/half_life_continuous_fit.csv", index=False)
+
 ax2.plot(pp,halflife_theo,c='k',zorder=-10,lw=1)
 for i,p0 in enumerate(p0_list):
     ax2.scatter(p0,halflife_sim[i],color=colors[i],s=80, linewidth=1, edgecolors='black')

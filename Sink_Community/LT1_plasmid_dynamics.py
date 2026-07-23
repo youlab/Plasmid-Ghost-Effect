@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import stats
 
@@ -84,6 +85,15 @@ for i, plasmid in enumerate(Plasmids):
                 ax.scatter(time, abundance[p, q, :], s=50, color=colors[p], linewidth=1, edgecolors='black', zorder=zorder)
                 ax.errorbar(time, abundance[p, q, :], std_abundance[p ,q, :], marker='None', linewidth=0, elinewidth=1,
                             capsize=1.3, color="k", zorder=zorder)
+        # save the plotted time series of each biological replicate (index 0 = LB, index 1 = LB+Ab)
+        records = {"time": time}
+        for p in range(n_ab):
+            cond = "noAb" if p == 0 else "Ab"
+            for q in range(bio_rep):
+                records[f"mean_{cond}_rep{q+1}"] = abundance[p, q, :]
+                records[f"se_{cond}_rep{q+1}"] = std_abundance[p, q, :]
+        pd.DataFrame(records).to_csv(f"./processed_data/{plasmid}_{condition}sponge_dynamics.csv", index=False)
+
         ax.fill_between(x=[1, 2], y1=[1, 1], y2=np.ones(2)*baseline_j[0]**(1/0.9), color="#808080", zorder=-20, alpha=0.3)
         ax.plot([-1,11],np.ones(2)*baseline_j[0],c="#7FBF7B",lw=1,zorder=-9)
         ax.fill_between(x=[-1,11],y1=baseline_j[0]-baseline_j[1],y2=baseline_j[0]+baseline_j[1],color="#7FBF7B", zorder=-10, alpha=0.3)
@@ -99,63 +109,4 @@ for i, plasmid in enumerate(Plasmids):
         fig.subplots_adjust(left=0.25, right=0.95, bottom=0.23, top=0.95)
         fig.savefig(f"./figures/{plasmid}_{condition}sponge.png",dpi=300)
         fig.savefig(f"./figures/{plasmid}_{condition}sponge.svg")
-
-        # fig2, ax2 = plt.subplots(1, 1, figsize=(2.05, 1.9))
-        # HL = np.zeros((n_ab, bio_rep))
-        # SE_HL = np.zeros((n_ab, bio_rep))
-        # # For LB group: calculate half-life from day 0
-        # t_start = 0
-        # for k in range(bio_rep):
-        #     t, t_se = loglinear_crossing_time(time[t_start:], abundance[0, k, t_start:], std_abundance[0, k, t_start:],
-        #                                       abundance[0,k,t_start]/2)
-        #     HL[0, k] = t
-        #     SE_HL[0, k] = t_se
-        # # For LB+Ab group: calculate half-life from day 2
-        # t_start = 2
-        # for k in range(bio_rep):
-        #     t, t_se = loglinear_crossing_time(time[t_start:], abundance[1, k, t_start:], std_abundance[1, k, t_start:],
-        #                                       abundance[1,k,t_start]/2)
-        #     HL[1, k] = t - t_start  # start counting after the antibiotic pulse
-        #     SE_HL[1, k] = t_se
-        #
-        # t_stat, p_two = stats.ttest_ind(HL[0, :], HL[1, :], equal_var=False)
-        # # Convert to one-sided (mean1 < mean2)
-        # if t_stat < 0:
-        #     p_value = p_two / 2
-        # else:
-        #     p_value = 1 - p_two / 2
-        # print(f"{plasmid} {condition}sponge Welch's t-test on Ab group > LB group (one-sided): {p_value:.2e}")
-        #
-        # # HL: shape (n_ab, bio_rep)
-        # # SE_HL: shape (n_ab, bio_rep)
-        # n_ab, bio_rep = HL.shape
-        #
-        # # --- summary stats ---
-        # means = HL.mean(axis=1)
-        # sems = HL.std(axis=1, ddof=1) / np.sqrt(bio_rep)  # SEM across biological replicates
-        # print(f"{plasmid} {condition}sponge LB Group half-life: {means[0]:.2f}±{sems[0]:.2f} days; "
-        #       f"Ab Group half-life: {means[1]:.1f}±{sems[1]:.1f} days")
-        #
-        # # --- plot ---
-        # x = np.arange(n_ab)
-        #
-        # # bars + error bars
-        # error_kw = {'elinewidth': 1.2, 'capsize': 4, 'capthick': 1.2}
-        # bars = ax2.bar(x, means, yerr=sems, width=0.6, error_kw=error_kw, lw=1.2, facecolor="None", edgecolor="k",
-        #                zorder=2)
-        #
-        # # jittered points (strip-like)
-        # rng = np.random.default_rng(42 + i)  # set seed for reproducible jitter
-        # jitter_scale = 0.08
-        # for j in range(n_ab):
-        #     x_j = rng.normal(loc=x[j], scale=jitter_scale, size=bio_rep)
-        #     ax2.scatter(x_j, HL[j], s=60, linewidths=1, facecolor=colors[j], edgecolors='k', zorder=3)
-        #     ax2.errorbar(x_j, HL[j], SE_HL[j], marker='o', markersize=0, elinewidth=1.2, linewidth=0,
-        #                  capsize=2, capthick=1.2, color="k", zorder=4)
-        # ax2.text(0.5, np.max(HL) * 1.08, p_to_star(p_value), ha='center', va='bottom', fontsize=12)
-        # ax2.plot(x, np.ones(2) * np.max(HL) * 1.13, c="k", lw=1)
-        # ax2.set_xticks(x)
-        # ax2.set_xticklabels(["no pulse", f"+{Abs[i]}"])
-        # ax2.set_ylim([0, np.max(HL) * 1.3])
-        # fig2.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
 plt.show()

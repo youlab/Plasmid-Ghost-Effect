@@ -26,6 +26,14 @@ for j,plasmid in enumerate(Plasmids):
     mean_composition = np.mean(composition,axis=0)
     std_composition = np.std(composition,axis=0,ddof=1)
     std_composition[:,0]=np.nan
+    # save the plotted composition (mean and SEM over the 3 biological replicates)
+    sample_labels = ["D0", "D1", "Day2_LB", "Day2_Ab"]
+    records = {"genus": genus_ids}
+    for s, label in enumerate(sample_labels):
+        records[f"mean_{label}"] = mean_composition[:, s]
+        records[f"se_{label}"] = std_composition[:, s] / np.sqrt(Reps)
+    pd.DataFrame(records).to_csv(f"./processed_data/{plasmid}_16S_composition.csv", index=False)
+
     base = np.zeros(4)
     for k in range(5):
         mean = mean_composition[k,:]

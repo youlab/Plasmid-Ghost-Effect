@@ -44,7 +44,7 @@ for c in range(ncol_plate*nrow_plate):
         ax.set_yticklabels([])
 fig.suptitle(sample)
 fig.subplots_adjust(hspace=0.05, wspace=0.05,left=0.1, right=0.9, top=0.9, bottom=0.1)
-fig.savefig(f"./figures/{sample}_all.png", dpi=300)
+# fig.savefig(f"./figures/{sample}_all.png", dpi=300)
 
 # DA28102: LB + Cm
 target_wells = ["B2","B3","B4","C2","C3","C4","D2","D3","D4"]

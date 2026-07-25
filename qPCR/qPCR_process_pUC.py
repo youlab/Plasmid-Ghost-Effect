@@ -111,8 +111,8 @@ ax.set_xlabel("log$_{2}$dilution")
 ax.set_ylabel("Ct")
 ax.set_title("MG1655+pUC")
 fig.tight_layout()
-fig.savefig("./figures/MG1655-pUC-calibration.png", dpi=300)
-fig.savefig("./figures/MG1655-pUC-calibration.svg", dpi=300)
+# fig.savefig("./figures/MG1655-pUC-calibration.png", dpi=300)
+# fig.savefig("./figures/MG1655-pUC-calibration.svg", dpi=300)
 # measurement data
 file = "./Raw_data/measurements.xlsx"
 

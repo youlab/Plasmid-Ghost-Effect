@@ -57,7 +57,7 @@ for c in range(ncol_plate*nrow_plate):
         ax_gfp.set_yticklabels([])
 fig.suptitle(sample)
 fig.subplots_adjust(hspace=0.05, wspace=0.05,left=0.1, right=0.9, top=0.9, bottom=0.1)
-fig.savefig(f"./figures/{sample}_all.png", dpi=300)
+# fig.savefig(f"./figures/{sample}_all.png", dpi=300)
 
 # MG1655 + pUC at Day 20
 for br in range(3):

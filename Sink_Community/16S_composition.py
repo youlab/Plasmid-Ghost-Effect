@@ -52,8 +52,8 @@ for j,plasmid in enumerate(Plasmids):
     ax.set_xticklabels(["D0","D1","LB","+Ab"])
 
     fig.subplots_adjust(left=0.15, right=0.95, bottom=0.15, top=0.87)
-    fig.savefig(f"./figures/16S_{plasmid}.png",dpi=300)
-    fig.savefig(f"./figures/16S_{plasmid}.svg")
+    # fig.savefig(f"./figures/16S_{plasmid}.png",dpi=300)
+    # fig.savefig(f"./figures/16S_{plasmid}.svg")
 
 from matplotlib.patches import Patch
 fig2,ax2=plt.subplots(1,1)
@@ -64,5 +64,5 @@ legend_handles = [
 ]
 
 ax2.legend(handles=legend_handles,title="genus")
-fig2.savefig(f"./figures/16S_legends.svg")
+# fig2.savefig(f"./figures/16S_legends.svg")
 plt.show()

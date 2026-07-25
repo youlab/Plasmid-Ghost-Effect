@@ -149,8 +149,8 @@ for i,strain in enumerate(Strains):
     ax2.plot(inits,median,c='k',lw=1.5,zorder=-10)
 
 fig.tight_layout()
-fig.savefig(f"./figures/KV2_Plasmids_Dynamics.png",dpi=300)
-fig.savefig(f"./figures/KV2_Plasmids_Dynamics.svg",dpi=300)
+# fig.savefig(f"./figures/KV2_Plasmids_Dynamics.png",dpi=300)
+# fig.savefig(f"./figures/KV2_Plasmids_Dynamics.svg",dpi=300)
 
 for i, strain in enumerate(Strains):
     ax2.scatter([],[],s=100,color=colors[i],linewidth=1,edgecolors='black',label=f'#{strain}')
@@ -170,6 +170,6 @@ fig2.subplots_adjust(
     bottom=0.23,
     top=0.95
 )
-fig2.savefig(f"./figures/KV2_halflife.png",dpi=300)
-fig2.savefig(f"./figures/KV2_halflife.svg")
+# fig2.savefig(f"./figures/KV2_halflife.png",dpi=300)
+# fig2.savefig(f"./figures/KV2_halflife.svg")
 plt.show()

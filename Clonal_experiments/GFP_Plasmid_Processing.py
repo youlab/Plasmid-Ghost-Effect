@@ -150,8 +150,8 @@ ax=axes[0]
 ax.set_ylabel("GFP/OD")
 ax.set_xlabel("P%")
 fig.tight_layout()
-fig.savefig("./figures/LT5_GFP_calibration.png",dpi=300)
-fig.savefig("./figures/LT5_GFP_calibration.svg")
+# fig.savefig("./figures/LT5_GFP_calibration.png",dpi=300)
+# fig.savefig("./figures/LT5_GFP_calibration.svg")
 
 def calculate_abundance(y,var_y,plasmid):
     # m is the slope, and b is the intercept

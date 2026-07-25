@@ -84,6 +84,6 @@ legend_handles = [
 ]
 
 fig.legend(handles=legend_handles,title="strain id",loc="center right",bbox_to_anchor=(1,0.5))
-fig.savefig(f"./figures/comm_dynamics_{dilution}dilution_all.png",dpi=300)
+# fig.savefig(f"./figures/comm_dynamics_{dilution}dilution_all.png",dpi=300)
 
 plt.show()

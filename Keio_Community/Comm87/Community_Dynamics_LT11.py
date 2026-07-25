@@ -66,8 +66,8 @@ for i in range(len(Conditions)):
         ax.set_ylabel("Comm87+R388")
         ax.set_xlabel("time (days)")
     fig.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
-    fig.savefig(f"./figures/LT11_comm_dynamics_{Conditions[i]}.png",dpi=300)
-    fig.savefig(f"./figures/LT11_comm_dynamics_{Conditions[i]}.svg")
+    # fig.savefig(f"./figures/LT11_comm_dynamics_{Conditions[i]}.png",dpi=300)
+    # fig.savefig(f"./figures/LT11_comm_dynamics_{Conditions[i]}.svg")
 
 from matplotlib.patches import Patch
 fig2,ax2=plt.subplots(1,1)
@@ -78,6 +78,6 @@ legend_handles = [
 ]
 
 ax2.legend(handles=legend_handles,title="strain id")
-fig2.savefig(f"./figures/LT11_legends.svg")
+# fig2.savefig(f"./figures/LT11_legends.svg")
 
 plt.show()

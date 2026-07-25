@@ -148,6 +148,6 @@ for i,plasmid in enumerate(plasmids):
     ax1.set_yticklabels(yticklabels[i])
     ax1.spines[['right', 'top']].set_visible(False)
     fig1.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
-    fig1.savefig(f"./figures/dose_response_{plasmid}.png", dpi=300)
-    fig1.savefig(f"./figures/dose_response_{plasmid}.svg")
+    # fig1.savefig(f"./figures/dose_response_{plasmid}.png", dpi=300)
+    # fig1.savefig(f"./figures/dose_response_{plasmid}.svg")
 plt.show()

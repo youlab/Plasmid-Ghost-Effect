@@ -108,7 +108,7 @@ for br in range(3):
                 frameon=False,
             )
 fig.tight_layout()
-fig.savefig(f"./figures/{plasmid}_Day{day}_growth_curve.png", dpi=300)
+# fig.savefig(f"./figures/{plasmid}_Day{day}_growth_curve.png", dpi=300)
 
 df = pd.concat(df, ignore_index=True)
 

@@ -107,6 +107,6 @@ for i, plasmid in enumerate(Plasmids):
             ax.set_xlabel("time (days)")
             ax.set_ylabel("GFP/OD")
         fig.subplots_adjust(left=0.25, right=0.95, bottom=0.23, top=0.95)
-        fig.savefig(f"./figures/{plasmid}_{condition}sponge.png",dpi=300)
-        fig.savefig(f"./figures/{plasmid}_{condition}sponge.svg")
+        # fig.savefig(f"./figures/{plasmid}_{condition}sponge.png",dpi=300)
+        # fig.savefig(f"./figures/{plasmid}_{condition}sponge.svg")
 plt.show()

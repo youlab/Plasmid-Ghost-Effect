@@ -65,6 +65,6 @@ ax.legend(
 )
 
 fig.tight_layout()
-fig.savefig("./figures/GFP_growth_curve_ancestor.png", dpi=300)
-fig.savefig("./figures/GFP_growth_curve_ancestor.svg", dpi=300)
+# fig.savefig("./figures/GFP_growth_curve_ancestor.png", dpi=300)
+# fig.savefig("./figures/GFP_growth_curve_ancestor.svg", dpi=300)
 plt.show()

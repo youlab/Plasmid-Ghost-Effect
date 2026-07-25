@@ -176,6 +176,6 @@ ax2.set_ylim([0,1.2])
 ax2.set_ylabel("w$_{AUC}$")
 
 fig.tight_layout()
-fig.savefig("./figures/conjugative_ancestor_fitness.png", dpi=300)
-fig.savefig("./figures/conjugative_ancestor_fitness.svg", dpi=300)
+# fig.savefig("./figures/conjugative_ancestor_fitness.png", dpi=300)
+# fig.savefig("./figures/conjugative_ancestor_fitness.svg", dpi=300)
 plt.show()

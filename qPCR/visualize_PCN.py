@@ -91,6 +91,6 @@ ax_pcn.set_xticklabels(order, rotation = 90)
 ax_pcn.set_ylabel("plasmid copy number")
 fig_pcn.tight_layout()
 
-fig_pcn.savefig("./figures/PCN_summary.png", dpi=300)
-fig_pcn.savefig("./figures/PCN_summary.svg", dpi=300)
+# fig_pcn.savefig("./figures/PCN_summary.png", dpi=300)
+# fig_pcn.savefig("./figures/PCN_summary.svg", dpi=300)
 plt.show()

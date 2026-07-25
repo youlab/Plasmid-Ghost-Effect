@@ -190,8 +190,8 @@ for i,plasmid in enumerate(plasmids):
         ax2.set_yticklabels([0,6,"> 12"])
 
     fig2.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
-    fig2.savefig(f"./figures/{plasmid}_halflife.png",dpi=300)
-    fig2.savefig(f"./figures/{plasmid}_halflife.svg")
-fig.savefig("./figures/GFP_Plasmids_dynamics.png",dpi=300)
-fig.savefig("./figures/GFP_Plasmids_dynamics.svg")
+    # fig2.savefig(f"./figures/{plasmid}_halflife.png",dpi=300)
+    # fig2.savefig(f"./figures/{plasmid}_halflife.svg")
+# fig.savefig("./figures/GFP_Plasmids_dynamics.png",dpi=300)
+# fig.savefig("./figures/GFP_Plasmids_dynamics.svg")
 plt.show()

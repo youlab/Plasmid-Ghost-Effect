@@ -169,8 +169,8 @@ for i, plasmid in enumerate(Plasmids):
         ax.set_xlabel("time (days)")
         ax.set_ylabel("P%", rotation=0, va="center", ha="right")
     fig.subplots_adjust(left=0.25, right=0.95, bottom=0.23, top=0.95)
-    fig.savefig(f"./figures/Comm57_{plasmid}_dynamics_{dilution}dilution.png",dpi=300)
-    fig.savefig(f"./figures/Comm57_{plasmid}_dynamics_{dilution}dilution.svg")
+    # fig.savefig(f"./figures/Comm57_{plasmid}_dynamics_{dilution}dilution.png",dpi=300)
+    # fig.savefig(f"./figures/Comm57_{plasmid}_dynamics_{dilution}dilution.svg")
 
     fig2, ax2 = plt.subplots(1, 1, figsize=(2.05, 1.9))
     HL = np.zeros((n_ab, bio_rep))
@@ -243,6 +243,6 @@ for i, plasmid in enumerate(Plasmids):
     if plasmid == "R6K":
         ax2.set_ylabel(r"$\tau_{1/2}$ (days)")
     fig2.subplots_adjust(left=0.25, right=0.95, bottom=0.15, top=0.87)
-    fig2.savefig(f"./figures/Comm57_{plasmid}_half_life_{dilution}dilution.png",dpi=300)
-    fig2.savefig(f"./figures/Comm57_{plasmid}_half_life_{dilution}dilution.svg")
+    # fig2.savefig(f"./figures/Comm57_{plasmid}_half_life_{dilution}dilution.png",dpi=300)
+    # fig2.savefig(f"./figures/Comm57_{plasmid}_half_life_{dilution}dilution.svg")
 plt.show()

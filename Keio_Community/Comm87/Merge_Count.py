@@ -35,5 +35,5 @@ sns.heatmap(Reads.T,ax=ax,xticklabels=I2,yticklabels=I1,square=True,cbar_kws={"l
 
 ax.set_xlabel("P7")
 ax.set_ylabel("P5")
-fig.savefig("./processed_data/merged_counts.png",dpi=300)
+# fig.savefig("./processed_data/merged_counts.png",dpi=300)
 plt.show()

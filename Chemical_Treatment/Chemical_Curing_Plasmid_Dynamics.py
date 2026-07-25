@@ -192,9 +192,9 @@ for i,chem in enumerate(Chemicals):
         ax2.set_yticklabels([])
 
 fig.subplots_adjust(left=0.15, right=0.95, bottom=0.16, top=0.92, hspace=0.3)
-fig.savefig("./figures/Chemical_Treatment_Plating.png",dpi=300)
-fig.savefig("./figures/Chemical_Treatment_Plating.svg")
+# fig.savefig("./figures/Chemical_Treatment_Plating.png",dpi=300)
+# fig.savefig("./figures/Chemical_Treatment_Plating.svg")
 fig2.subplots_adjust(left=0.15, right=0.95, bottom=0.16, top=0.92, hspace=0.3)
-fig2.savefig(f"./figures/treatment_half_lives.png", dpi=300)
-fig2.savefig(f"./figures/treatment_half_lives.svg")
+# fig2.savefig(f"./figures/treatment_half_lives.png", dpi=300)
+# fig2.savefig(f"./figures/treatment_half_lives.svg")
 plt.show()

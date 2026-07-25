@@ -120,8 +120,8 @@ ax.set_xlabel("P%")
 title = "after Ab treatment" if selection == "+" else "no Ab treatment"
 fig.suptitle(title)
 fig.tight_layout()
-fig.savefig(f"./figures/LT18_GFP_calibration{selection}Ab.png",dpi=300)
-fig.savefig(f"./figures/LT18_GFP_calibration{selection}Ab.svg")
+# fig.savefig(f"./figures/LT18_GFP_calibration{selection}Ab.png",dpi=300)
+# fig.savefig(f"./figures/LT18_GFP_calibration{selection}Ab.svg")
 with open(f"./LT_Data_py/LT18_calibration{selection}Ab.pkl", "wb") as f:
     pickle.dump(fit_result, f)
 plt.show()

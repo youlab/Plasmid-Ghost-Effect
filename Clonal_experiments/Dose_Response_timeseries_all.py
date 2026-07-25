@@ -76,7 +76,7 @@ for i,plasmid in enumerate(plasmids):
                 ax1.text(x=0.12,y=0.12,s=s,transform=ax1.transAxes,fontsize=11,ha="left",bbox=bbox,zorder=50)
 
 fig1.tight_layout()
-fig1.savefig("./figures/dose_response_timeseries.png",dpi=300)
+# fig1.savefig("./figures/dose_response_timeseries.png",dpi=300)
 
 # ------------------------------------------------------------------
 # 2. export the time series averaged over biological replicates ----

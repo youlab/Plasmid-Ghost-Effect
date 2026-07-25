@@ -49,13 +49,13 @@ for i,plasmid in enumerate(plasmids):
         ax1.set_ylabel("P%", rotation=0, va="center", ha="right")
 
     fig1.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
-    fig1.savefig(f"./figures/{plasmid}_dose_response_timeseries.png",dpi=300)
-    fig1.savefig(f"./figures/{plasmid}_dose_response_timeseries.svg")
+    # fig1.savefig(f"./figures/{plasmid}_dose_response_timeseries.png",dpi=300)
+    # fig1.savefig(f"./figures/{plasmid}_dose_response_timeseries.svg")
 
 fig2,ax2=plt.subplots(1,1,figsize=(6,2))
 labels = [0,"2$^{-5}$",r"1 ($\times$50 $\mu$g/mL)"]
 for i in range(3):
     ax2.scatter([],[], s=80, color="#B3B3B3", linewidth=1, edgecolors='black', marker=markers[i], label=labels[i])
 ax2.legend(ncol=3,handlelength=0.5)
-fig2.savefig("./figures/dose_response_legend.svg")
+# fig2.savefig("./figures/dose_response_legend.svg")
 plt.show()

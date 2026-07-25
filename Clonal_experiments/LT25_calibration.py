@@ -136,6 +136,6 @@ if __name__ == "__main__":
             pickle.dump(calibration, f)
 
     fig.tight_layout()
-    fig.savefig('./figures/LT25_calibration.png', dpi=300)
+    # fig.savefig('./figures/LT25_calibration.png', dpi=300)
 plt.show()
 

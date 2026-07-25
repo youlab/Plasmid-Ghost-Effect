@@ -49,6 +49,6 @@ ax1.set_xlabel("time (days)")
 ax1.set_ylabel("P%",rotation=0,va="center",ha="right")
 
 fig.subplots_adjust(left=0.25,right=0.95,bottom=0.23,top=0.95)
-fig.savefig("./figures/pSC101_dynamics.png",dpi=300)
-fig.savefig("./figures/pSC101_dynamics.svg")
+# fig.savefig("./figures/pSC101_dynamics.png",dpi=300)
+# fig.savefig("./figures/pSC101_dynamics.svg")
 plt.show()

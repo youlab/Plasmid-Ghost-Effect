@@ -12,6 +12,12 @@ plasmid_id = {"pSC101":1, "colE1":2, "pUC":3}
 collected_gr_pvals = {}
 collected_auc_pvals = {}
 
+def format_pval(p):
+    """Format a p-value for display on the figure."""
+    if p < 0.001:
+        return f"p={p:.0e}"
+    return f"p={p:.3f}"
+
 def add_significance_brackets(ax, all_y_vals, pvals_dict):
     """Add significance brackets to bar plot with proper layering.
     
@@ -36,13 +42,12 @@ def add_significance_brackets(ax, all_y_vals, pvals_dict):
     
     for idx, ((i_a, i_b), p_val) in enumerate(sorted_comparisons):
         if p_val < 0.05:
-            sig = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*"
             layer = layer_map[idx]
             y_bracket = y_max + y_offset + layer * bracket_spacing
             ax.plot([i_a, i_b], [y_bracket,y_bracket], 'k-', linewidth=1, zorder=5)
-            # Add significance label
-            ax.text((i_a + i_b) / 2, y_bracket, sig, 
-                   ha='center', fontsize=14, zorder=5)
+            # Add p-value label
+            ax.text((i_a + i_b) / 2, y_bracket + 0.01, format_pval(p_val),
+                   ha='center', va='bottom', fontsize=9, zorder=5)
 
 # Load ancestor fitness
 ancestor_fitness = pd.read_excel("./processed_data/ancestor/GFP_fitness.xlsx")
@@ -197,8 +202,8 @@ for i, plasmid in enumerate(plasmids):
     ax_auc.set_title(f"{plasmid} - AUC", fontsize=12)
 
 fig_main.tight_layout()
-fig_main.savefig("./figures/combined_fitness_all_plasmids.png", dpi=300)
-#fig_main.savefig("./figures/combined_fitness_all_plasmids.svg", dpi=300)
+# fig_main.savefig("./figures/combined_fitness_all_plasmids.png", dpi=300)
+# fig_main.savefig("./figures/combined_fitness_all_plasmids.svg", dpi=300)
 print("Saved combined fitness plots")
 
 # Create summary table by plasmid and day

@@ -66,6 +66,6 @@ fig.legend(loc="lower left",bbox_to_anchor=(0.08,0.2))
 axes[0].set_xlabel("time (days)")
 axes[0].set_ylabel("$^2$D",rotation=0,va="center",ha="right")
 fig.subplots_adjust(bottom=0.1,left=0.08,top=0.95,right=0.98,hspace=0.25,wspace=0.25)
-fig.savefig("./figures/simpson_diversity.png",dpi=300)
+# fig.savefig("./figures/simpson_diversity.png",dpi=300)
 
 plt.show()

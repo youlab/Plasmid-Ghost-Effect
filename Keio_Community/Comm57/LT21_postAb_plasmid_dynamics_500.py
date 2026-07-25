@@ -47,9 +47,9 @@ def report_welch_t(a, b, group_names=("Group A", "Group B"), alpha=0.05):
     J = 1 - 3 / (4*(n1 + n2) - 9)  # Hedges' small-sample correction
     g = J * d if np.isfinite(d) else np.nan
 
-    # p-value formatting (APA-ish)
+    # p-value formatting (exact value)
     if p_value < 0.001:
-        p_str = "p<.001"
+        p_str = f"p={p_value:.2e}"
     else:
         p_str = f"p={p_value:.3f}".replace("0.", ".")
 

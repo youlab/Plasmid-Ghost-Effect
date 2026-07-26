@@ -13,3 +13,6 @@ __pycache__/
 .vscode/
 .idea/
 Growth_data/aborted/
+
+# kept locally, not part of the published analysis
+Keio_Community/Comm87/Diversity_LT11.py

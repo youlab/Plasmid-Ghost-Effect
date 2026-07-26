@@ -129,13 +129,16 @@ Two things to know before running:
 
 * `Merge_Count.py` reads the header from `./raw_data/1/1.tabular` but the loop reads
   `<i5>/<i7>.tabular` — set both to the same prefix (or run from inside `raw_data/`) or every well
-  silently comes back as zeros. The community-specific copies
-  [Keio_Community/Comm87/Merge_Count.py](../Keio_Community/Comm87/Merge_Count.py) and
-  [Keio_Community/Comm57/Merge_Count.py](../Keio_Community/Comm57/Merge_Count.py) use a single
-  `path` variable and are already restricted to that community's well range — the easier starting
-  point when reproducing the paper.
-* Besides the packages in [environment.yml](../environment.yml), this script needs
-  [natsort](https://pypi.org/project/natsort/): `pip install natsort`.
+  silently comes back as zeros. [Keio_Community/Comm57/Merge_Count.py](../Keio_Community/Comm57/Merge_Count.py)
+  is the same script and has the same mismatch; only
+  [Keio_Community/Comm87/Merge_Count.py](../Keio_Community/Comm87/Merge_Count.py) is fixed, using a
+  single `path` variable and a well range already restricted to Comm87 (i5 9–16 × i7 13–24) — the
+  easier starting point when reproducing that community.
+* Both copies under `Keio_Community/` have the `fig.savefig` line commented out, so they show the
+  QC heatmap without writing `merged_counts.png`. The copy in this folder writes it.
+
+The script imports [natsort](https://pypi.org/project/natsort/), which is included in
+[environment.yml](../environment.yml).
 
 ## 5. Downstream analysis
 

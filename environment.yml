@@ -11,4 +11,5 @@ dependencies:
   - openpyxl
   - scikit-learn
   - seaborn
+  - natsort
 prefix: /Users/johnkingzhou/miniforge3/envs/ghost_effect

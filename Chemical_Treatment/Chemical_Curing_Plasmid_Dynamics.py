@@ -2,15 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
-def p_to_star(p):
+def format_pval(p):
+    """Format a p-value for display on the figure."""
     if p < 0.001:
-        return "***"
-    elif p < 0.01:
-        return "**"
-    elif p < 0.05:
-        return "*"
-    else:
-        return "ns"
+        return f"p={p:.1e}"
+    return f"p={p:.3f}"
 
 cmap = plt.get_cmap('Set2')
 colors = [cmap(i) for i in np.linspace(0, 1, 8)]
@@ -177,9 +173,8 @@ for i,chem in enumerate(Chemicals):
     for (a, b), p in zip(pairs, pvals):
         if p>=0.05:
             continue
-        stars = p_to_star(p)
         y = 9.8
-        ax2.text(b, y, stars, ha='center', va='bottom', fontsize=12)
+        ax2.text(b, y, format_pval(p), ha='center', va='bottom', fontsize=10)
     ax2.set_ylim([0, 13])
     ax2.set_yticks([0,5,10])
     ax2.set_xticks(x)
@@ -195,6 +190,6 @@ fig.subplots_adjust(left=0.15, right=0.95, bottom=0.16, top=0.92, hspace=0.3)
 # fig.savefig("./figures/Chemical_Treatment_Plating.png",dpi=300)
 # fig.savefig("./figures/Chemical_Treatment_Plating.svg")
 fig2.subplots_adjust(left=0.15, right=0.95, bottom=0.16, top=0.92, hspace=0.3)
-# fig2.savefig(f"./figures/treatment_half_lives.png", dpi=300)
-# fig2.savefig(f"./figures/treatment_half_lives.svg")
+fig2.savefig(f"./figures/treatment_half_lives.png", dpi=300)
+fig2.savefig(f"./figures/treatment_half_lives.svg")
 plt.show()

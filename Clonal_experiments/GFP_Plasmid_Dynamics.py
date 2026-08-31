@@ -150,11 +150,11 @@ for i,plasmid in enumerate(plasmids):
         sem_HL = sd_HL / np.sqrt(bio_rep)
         print(f"P0={inits[k]}%: {mean_HL:.2f} ± {sd_HL:.2f}, n = 3")
         if k==4:
-            delta = np.log(2) / mean_HL
+            delta = np.log(2) / mean_HL #day^-1
             se_delta = np.log(2) * sem_HL / (mean_HL**2)
             pcn = PCN[plasmid]
             se_pcn = SE_PCN[plasmid]
-            kappa = 0.5**(pcn-1) * np.log2(500) / 24 # 500-fold daily dilution, converted to generation per hour
+            kappa = 0.5**(pcn-1) * np.log2(500)# day^-1
             max_HL = np.log(delta / kappa) / delta
             dmax_ddelta = (1.0 - np.log(delta / kappa)) / (delta**2)
             dmax_dpcn = np.log(2) / delta
